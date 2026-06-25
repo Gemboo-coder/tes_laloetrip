@@ -1,36 +1,36 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Model;
 
-class PaketTrip extends Model
-{
-    protected $fillable = [
-        'nama_paket',
-        'jenis_paket',
-        'deskripsi',
-        'harga',
-        'durasi',
-        'slug',
-        'thumbnail',
-    ];
-
-    public function destinasis()
+    class PaketTrip extends Model
     {
-        return $this->belongsToMany(
-            Destinasi::class,
-            'destinasi_paket_trip'
-        );
-    }
+        protected $fillable = [
+            'nama_paket',
+            'jenis_paket',
+            'deskripsi',
+            'harga',
+            'durasi',
+            'slug',
+            'thumbnail',
+        ];
 
-    public function galeris()
-    {
-        return $this->hasMany(Galeri::class);
-    }
+        public function destinasis()
+        {
+            return $this->belongsToMany(
+                Destinasi::class,
+                'destinasi_paket_trip'
+            );
+        }
 
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
+        public function galeris()
+        {
+            return $this->hasMany(Galeri::class);
+        }
+
+        public function reviews()
+        {
+            return $this->hasMany(Review::class);
+        }
     }
-}
