@@ -247,11 +247,11 @@
             <ul class="navbar-nav align-items-center">
 
             <li class="nav-item">
-                    <a class="nav-link" href="#">Beranda</a>
+                    <a class="nav-link" href="{{ route('home') }}">Beranda</a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Paket Trip</a>
+                    <a class="nav-link" href="{{ route('paket.paket') }}">Paket Trip</a>
                 </li>
 
                 <li class="nav-item">
