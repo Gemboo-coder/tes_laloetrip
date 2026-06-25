@@ -16,7 +16,7 @@ class HomeController extends Controller
         $galeris = Galeri::latest()->take(8)->get();
         $reviews = Review::latest()->take(5)->get();
 
-        return view('home.index', compact(
+        return view('home', compact(
             'paketTrips',
             'destinasis',
             'galeris',
