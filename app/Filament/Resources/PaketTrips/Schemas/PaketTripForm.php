@@ -43,7 +43,10 @@ class PaketTripForm
                     ->columnSpanFull(),
 
                 FileUpload::make('thumbnail')
-                    ->image(),
+                    ->image()
+                    ->disk('public')
+                    ->directory('paket')
+                    ->required()
 
             ]);
     }

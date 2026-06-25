@@ -29,6 +29,7 @@ class GaleriForm
 
                 FileUpload::make('gambar')
                     ->image()
+                    ->directory('galeri')
                     ->required(),
 
             ]);
