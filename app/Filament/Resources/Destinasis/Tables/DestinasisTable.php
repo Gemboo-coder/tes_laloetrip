@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\Destinasis\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class DestinasisTable
@@ -13,18 +14,20 @@ class DestinasisTable
     {
         return $table
             ->columns([
-                //
-            ])
-            ->filters([
-                //
+
+                ImageColumn::make('gambar'),
+
+                TextColumn::make('nama_destinasi')
+                    ->searchable(),
+
+                TextColumn::make('kategori'),
+
+                TextColumn::make('slug'),
+
             ])
             ->recordActions([
                 EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                DeleteAction::make(),
             ]);
     }
 }

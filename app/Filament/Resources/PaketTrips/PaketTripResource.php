@@ -26,7 +26,7 @@ class PaketTripResource extends Resource
     {
         return PaketTripForm::configure($schema);
     }
-
+    
     public static function table(Table $table): Table
     {
         return PaketTripsTable::configure($table);
@@ -38,7 +38,7 @@ class PaketTripResource extends Resource
             //
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
