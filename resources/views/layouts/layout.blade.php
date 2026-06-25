@@ -235,7 +235,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
 
-        <a class="navbar-brand" href="{{ route('welcome') }}">
+        <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{ asset('assets/logo.png') }}" alt="LaloeTrip">
         </a>
 
