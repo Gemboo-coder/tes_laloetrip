@@ -11,10 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('paket_trip_destinasi', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+       Schema::create('destinasi_paket_trip', function (Blueprint $table) {
+    $table->id();
+
+    $table->foreignId('paket_trip_id')
+        ->constrained()
+        ->cascadeOnDelete();
+
+    $table->foreignId('destinasi_id')
+        ->constrained()
+        ->cascadeOnDelete();
+
+    $table->timestamps();
+});
     }
 
     /**
@@ -22,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('paket_trip_destinasi');
+        Schema::dropIfExists('destinasi_paket_trip');
     }
 };

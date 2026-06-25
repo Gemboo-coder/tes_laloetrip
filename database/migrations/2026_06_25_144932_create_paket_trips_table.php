@@ -12,9 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paket_trips', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    $table->id();
+
+    $table->string('nama_paket');
+    $table->string('jenis_paket');
+    $table->text('deskripsi');
+    $table->decimal('harga', 12, 2);
+    $table->string('durasi');
+    $table->string('slug')->unique();
+    $table->string('thumbnail')->nullable();
+    $table->timestamps();
+});
     }
 
     /**
