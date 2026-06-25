@@ -12,7 +12,7 @@ Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
 Route::get('/paket-trip', [PaketTripController::class, 'index'])
-    ->name('paket.index');
+    ->name('paket.paket');
 
 Route::get('/paket-trip/{slug}', [PaketTripController::class, 'show'])
     ->name('paket.show');

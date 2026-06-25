@@ -10,7 +10,7 @@ class PaketTripController extends Controller
     {
         $paketTrips = PaketTrip::all();
 
-        return view('paket.index', compact('paketTrips'));
+        return view('paket.paket', compact('paketTrips'));
     }
 
     public function show($slug)
