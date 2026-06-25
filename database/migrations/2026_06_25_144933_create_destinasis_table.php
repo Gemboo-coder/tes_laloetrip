@@ -12,9 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('destinasis', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    $table->id();
+    $table->foreignId('paket_trip_id')
+        ->constrained()
+        ->onDelete('cascade');
+    $table->string('nama_destinasi');
+    $table->string('kategori');
+    $table->string('slug')->unique();
+    $table->text('deskripsi');
+    $table->string('gambar')->nullable();
+    $table->timestamps();
+});
     }
 
     /**
