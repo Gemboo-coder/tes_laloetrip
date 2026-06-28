@@ -14,6 +14,7 @@
             'durasi',
             'slug',
             'thumbnail',
+            'jumlah_destinasi',
         ];
 
         public function destinasis()
