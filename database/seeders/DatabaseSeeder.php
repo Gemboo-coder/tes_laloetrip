@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
