@@ -11,6 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        
         $paketTrips = PaketTrip::latest()->take(3)->get();
         $destinasis = Destinasi::latest()->take(6)->get();
         $galeris = Galeri::latest()->take(8)->get();

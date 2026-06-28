@@ -255,6 +255,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('destinasi.index') }}">Destinasi Wisata</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="#">Tentang Kami</a>
                 </li>
                 

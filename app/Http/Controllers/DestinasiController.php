@@ -10,7 +10,7 @@ class DestinasiController extends Controller
     {
         $destinasis = Destinasi::all();
 
-        return view('destinasi.index', compact('destinasis'));
+        return view('Destinasi.index', compact('destinasis'));
     }
 
     public function show($slug)
@@ -18,6 +18,6 @@ class DestinasiController extends Controller
         $destinasi = Destinasi::where('slug', $slug)
             ->firstOrFail();
 
-        return view('destinasi.show', compact('destinasi'));
+        return view('Destinasi.show', compact('destinasi'));
     }
 }
