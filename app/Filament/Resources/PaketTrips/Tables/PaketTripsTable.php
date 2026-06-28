@@ -27,6 +27,7 @@ class PaketTripsTable
                     ->money('IDR'),
 
                 TextColumn::make('durasi'),
+                TextColumn::make('jumlah_destinasi'),
 
                 TextColumn::make('created_at')
                     ->dateTime(),

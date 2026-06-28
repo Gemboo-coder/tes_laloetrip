@@ -46,8 +46,11 @@ class PaketTripForm
                     ->image()
                     ->disk('public')
                     ->directory('paket')
-                    ->required()
+                    ->required(),
 
+                TextInput::make('jumlah_destinasi')
+                    ->numeric()
+                    ->required(),
             ]);
     }
 }
