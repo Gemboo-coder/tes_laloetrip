@@ -48,9 +48,7 @@ class PaketTripForm
                     ->directory('paket')
                     ->required(),
 
-                TextInput::make('jumlah_destinasi')
-                    ->numeric()
-                    ->required(),
+             
             ]);
     }
 }
