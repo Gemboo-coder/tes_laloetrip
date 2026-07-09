@@ -11,9 +11,14 @@
     <div class="destinasi-hero-bg" style="background-image: url('{{ asset('assets/gili.jpg') }}');"></div>
     <div class="destinasi-hero-dimmer"></div>
     <div class="destinasi-hero-content">
-        <span class="hero-badge">✦ Jelajahi Lombok</span>
-        <h1 class="hero-title mt-3">Temukan Destinasi<br><em>Impian Kamu</em></h1>
-        <p class="hero-sub">50+ destinasi eksotis dan instagrammable di Lombok — dari pantai tersembunyi hingga puncak gunung berapi yang memukau.</p>
+        <div class="destinasi-breadcrumb reveal">
+            <a href="{{ route('home') }}">Home</a>
+            <span class="sep">/</span>
+            <span>Destinasi Wisata</span>
+        </div>
+        <span class="hero-badge mb-2 reveal">✦ Jelajahi Lombok</span>
+        <h1 class="destinasi-hero-title reveal">Temukan Destinasi<br><em>Impian Kamu</em></h1>
+        <p class="destinasi-hero-sub reveal">50+ destinasi eksotis dan instagrammable di Lombok — dari pantai tersembunyi hingga puncak gunung berapi yang memukau.</p>
     </div>
     <div class="destinasi-hero-wave">
         <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -151,8 +156,25 @@
     background: linear-gradient(to bottom, rgba(10,22,40,.75), rgba(10,22,40,.5));
     z-index: 1;
 }
-.destinasi-hero-content { position:relative; z-index:10; padding:0 20px; }
+.destinasi-hero-content { position:relative; z-index:10; padding:0 20px; max-width: 700px; }
 .destinasi-hero-wave { position:absolute; bottom:-1px; width:100%; z-index:15; }
+
+/* ── HERO TEKS (tema sama seperti About Us & Paket Trip) ── */
+.destinasi-breadcrumb {
+    font-size: .8rem; color: rgba(255,255,255,.55);
+    margin-bottom: 1.5rem; letter-spacing: .03em;
+}
+.destinasi-breadcrumb a { color: rgba(255,255,255,.75); text-decoration: none; }
+.destinasi-breadcrumb a:hover { color: var(--gold); }
+.destinasi-breadcrumb .sep { margin: 0 .5rem; color: rgba(255,255,255,.35); }
+.destinasi-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700; color: #fff; line-height: 1.15;
+    margin: 1rem 0 1.2rem;
+}
+.destinasi-hero-title em { font-style: normal; color: var(--gold); }
+.destinasi-hero-sub { color: rgba(255,255,255,.75); font-size: 1.05rem; line-height: 1.7; }
 
 /* ── FILTER BAR ── */
 .filter-bar {
@@ -315,6 +337,18 @@
 }
 .dest-cta-btn-wa:hover { background: #1aaa53; transform: translateY(-3px); color: #fff; }
 
+/* ── REVEAL (tema sama seperti About Us & Paket Trip) ── */
+.reveal {
+    opacity: 0; transform: scale(0.85) translateY(24px);
+    transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    transition-delay: calc(var(--delay, 0) * 0.12s);
+    will-change: opacity, transform;
+}
+.reveal.visible { opacity: 1; transform: scale(1) translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { transition:none !important; animation:none !important; opacity:1; transform:none; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 992px) { .destinasi-grid { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 640px) {
@@ -327,6 +361,30 @@
 
 @push('js')
 <script>
+// Reveal on scroll (hero teks — tema sama seperti About Us & Paket Trip)
+document.addEventListener('DOMContentLoaded', function () {
+    var reveals = document.querySelectorAll('.reveal');
+    if (reveals.length) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+                revealObserver.unobserve(el);
+            } else {
+                revealObserver.observe(el);
+            }
+        });
+    }
+});
+
 // Filter
 const tabs = document.querySelectorAll('.filter-tab');
 const grid = document.getElementById('destinasiGrid');

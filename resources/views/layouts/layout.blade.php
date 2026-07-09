@@ -400,7 +400,7 @@
             <li><a class="nav-link" href="{{ route('home') }}">Beranda</a></li>
             <li><a class="nav-link" href="{{ route('paket.paket') }}">Paket Trip</a></li>
             <li><a class="nav-link" href="{{ route('destinasi.index') }}">Destinasi Wisata</a></li>
-            <li><a class="nav-link" href="#">Tentang Kami</a></li>
+            <li><a class="nav-link" href="{{ route('about') }}">Tentang Kami</a></li>
             <li><a class="nav-link" href="#">Galeri</a></li>
             <li>
                 <a href="https://wa.me/6285713717336" target="_blank" class="btn-booking">
@@ -438,7 +438,7 @@
     <a class="m-link" href="{{ route('home') }}">Beranda</a>
     <a class="m-link" href="{{ route('paket.paket') }}">Paket Trip</a>
     <a class="m-link" href="{{ route('destinasi.index') }}">Destinasi Wisata</a>
-    <a class="m-link" href="#">Tentang Kami</a>
+    <a class="m-link" href="{{ route('about') }}">Tentang Kami</a>
     <a class="m-link" href="#">Galeri</a>
 
     <a href="https://wa.me/6285713717336" target="_blank" class="btn-booking">

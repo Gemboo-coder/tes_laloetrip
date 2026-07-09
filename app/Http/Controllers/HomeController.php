@@ -16,12 +16,16 @@ class HomeController extends Controller
         $destinasis = Destinasi::latest()->take(6)->get();
         $galeris = Galeri::latest()->take(8)->get();
         $reviews = Review::latest()->take(5)->get();
+        $kategoriPaket = PaketTrip::select('jenis_paket')
+    ->distinct()
+    ->pluck('jenis_paket');
 
         return view('home', compact(
             'paketTrips',
             'destinasis',
             'galeris',
-            'reviews'
+            'reviews',
+            'kategoriPaket'
         ));
     }
 }
