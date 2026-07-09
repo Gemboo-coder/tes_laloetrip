@@ -29,6 +29,9 @@ Route::get('/galeri', [GaleriController::class, 'index'])
 Route::get('/review', [ReviewController::class, 'index'])
     ->name('review.index');
 
+Route::get('/about', [HomeController::class, 'about'])
+    ->name('about');
+    
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
@@ -49,10 +52,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
-
-    Route::get('/about', function () {
-        return view('about');
-    })->name('about');
 });
 
 require __DIR__.'/auth.php';

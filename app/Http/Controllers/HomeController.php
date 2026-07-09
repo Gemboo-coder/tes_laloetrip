@@ -26,6 +26,16 @@ class HomeController extends Controller
             'galeris',
             'reviews',
             'kategoriPaket'
+
         ));
     }
-}
+
+    public function about()
+    {
+        return view('about');
+    }
+
+    public function contact()
+    {
+        return view('contact');
+    }}
