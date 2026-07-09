@@ -64,14 +64,14 @@
 </section>
 
 {{-- ═══════════════════════════════════════
-     STATS BAR
+     STATS BAR (dengan counter animasi)
 ════════════════════════════════════════ --}}
 <div class="stats-bar">
     <div class="stats-grid">
-        <div><div class="stat-num">50+</div><div class="stat-label">DESTINASI</div></div>
-        <div><div class="stat-num">500+</div><div class="stat-label">TRAVELER PUAS</div></div>
-        <div><div class="stat-num">3</div><div class="stat-label">PAKET PILIHAN</div></div>
-        <div><div class="stat-num">4.9★</div><div class="stat-label">RATA-RATA RATING</div></div>
+        <div><div class="stat-num" data-count="50" data-suffix="+">0</div><div class="stat-label">DESTINASI</div></div>
+        <div><div class="stat-num" data-count="500" data-suffix="+">0</div><div class="stat-label">TRAVELER PUAS</div></div>
+        <div><div class="stat-num" data-count="3" data-suffix="">0</div><div class="stat-label">PAKET PILIHAN</div></div>
+        <div><div class="stat-num" data-count="4.9" data-suffix="★" data-decimal="1">0</div><div class="stat-label">RATA-RATA RATING</div></div>
     </div>
 </div>
 
@@ -79,29 +79,29 @@
      KEUNGGULAN
 ════════════════════════════════════════ --}}
 <section class="section-keunggulan">
-    <div class="section-header text-center mb-5">
+    <div class="section-header text-center mb-5 reveal">
         <span class="hero-badge mb-2" style="border-color:var(--gold); color:var(--gold);">Keunggulan LaloeTrip</span>
         <h2 class="section-title">Mengapa Memilih<br/>LaloeTrip?</h2>
         <p class="section-sub">Kami berkomitmen memberikan pengalaman terbaik dengan harga yang terjangkau dan pelayanan yang personal.</p>
     </div>
 
     <div class="keunggulan-grid">
-        <div class="keunggulan-card reveal">
+        <div class="keunggulan-card reveal zoom-in" style="--delay:0">
             <div class="icon">💰</div>
             <h3>Harga Terjangkau</h3>
             <p>Paket mulai dari Rp 250.000/pax tanpa mengorbankan kualitas</p>
         </div>
-        <div class="keunggulan-card reveal">
+        <div class="keunggulan-card reveal zoom-in" style="--delay:1">
             <div class="icon">🎯</div>
             <h3>Destinasi Pilihan</h3>
             <p>50+ lokasi estetik dan instagrammable di Lombok</p>
         </div>
-        <div class="keunggulan-card reveal">
+        <div class="keunggulan-card reveal zoom-in" style="--delay:2">
             <div class="icon">👥</div>
             <h3>Guide Berpengalaman</h3>
             <p>Pemandu lokal yang ramah dan tahu spot-spot terbaik</p>
         </div>
-        <div class="keunggulan-card reveal">
+        <div class="keunggulan-card reveal zoom-in" style="--delay:3">
             <div class="icon">📱</div>
             <h3>Booking Mudah</h3>
             <p>Booking cepat via WhatsApp, flexible payment system</p>
@@ -113,7 +113,7 @@
      PAKET WISATA (DYNAMIC FROM DB)
 ════════════════════════════════════════ --}}
 <section class="packages section-packages" id="packages">
-    <div class="section-header text-center mb-5">
+    <div class="section-header text-center mb-5 reveal">
         <span class="hero-badge mb-2" style="border-color:var(--gold); color:var(--gold);">Paket Wisata</span>
         <h2 class="section-title">Pilih Paket<br/>Perjalanan Anda</h2>
         <p class="section-sub">Dari fullday trip hingga pengalaman multi-hari, kami menyiapkan paket yang sesuai dengan waktu dan budget Anda.</p>
@@ -123,7 +123,7 @@
         @forelse($paketTrips as $paket)
         @php $isFeatured = $loop->index === 1; @endphp
 
-        <div class="pkg-card {{ $isFeatured ? 'featured' : '' }} reveal">
+        <div class="pkg-card {{ $isFeatured ? 'featured' : '' }} reveal zoom-in" style="--delay:{{ $loop->index }}">
 
             @if($isFeatured)
                 <div class="pkg-badge">TERPOPULER</div>
@@ -145,7 +145,7 @@
 
             <div class="pkg-price">
                 <div class="pkg-price-from">Mulai dari</div>
-                <span class="pkg-price-num">Rp {{ number_format($paket->harga, 0, ',', '.') }}</span>
+                <span class="pkg-price-num" data-price="{{ $paket->harga }}">Rp 0</span>
                 <span class="pkg-price-unit">/pax</span>
             </div>
 
@@ -172,13 +172,13 @@
         @endforelse
     </div>
 
-    <div class="text-center mt-5">
+    <div class="text-center mt-5 reveal">
         <a href="{{ route('paket.paket') }}" class="btn-lihat-semua">
-            Lihat Semua Paket →
+            Lihat Semua Paket <span class="arrow">→</span>
         </a>
     </div>
 
-    <div class="info-pembayaran">
+    <div class="info-pembayaran reveal">
         <p><strong style="color:var(--dark)">💡 Info Pembayaran:</strong> Sistem DP — bayar sebagian untuk konfirmasi booking. Sisa pelunasan sebelum keberangkatan. Pembatalan: DP tidak dapat dikembalikan. Harga dikondisikan berdasarkan jumlah peserta.</p>
     </div>
 </section>
@@ -216,7 +216,20 @@
 .carousel-item {
     background-size: cover;
     background-position: center;
-    transition: opacity 1.2s ease-in-out !important;
+    /* fade + zoom saat pindah slide */
+    transform: scale(1.06);
+    transition: opacity 1.2s ease-in-out, transform 1.6s ease-in-out !important;
+}
+.carousel-item.active {
+    transform: scale(1);
+}
+/* subtle slow zoom on active hero image (background, terpisah dari transform di atas) */
+.carousel-item {
+    animation: heroZoom 12s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+    from { background-size: 100%; }
+    to   { background-size: 112%; }
 }
 .hero-dimmer {
     position: absolute;
@@ -239,10 +252,12 @@
     transform: translateY(25px);
     transition: all 0.7s ease-out;
 }
-.carousel-item.active .hero-content .hero-badge { opacity:1; transform:translateY(0); transition-delay:0.3s; }
-.carousel-item.active .hero-content .hero-title { opacity:1; transform:translateY(0); transition-delay:0.5s; }
-.carousel-item.active .hero-content .hero-sub   { opacity:1; transform:translateY(0); transition-delay:0.7s; }
-.carousel-item.active .hero-content .hero-btns  { opacity:1; transform:translateY(0); transition-delay:0.9s; }
+/* Teks hero baru animasi muncul kalau carousel sudah "is-ready" (di-set via JS sesaat
+   setelah load), supaya slide pertama juga ikut animasi, bukan langsung full opacity. */
+#heroCarousel.is-ready .carousel-item.active .hero-content .hero-badge { opacity:1; transform:translateY(0); transition-delay:0.3s; }
+#heroCarousel.is-ready .carousel-item.active .hero-content .hero-title { opacity:1; transform:translateY(0); transition-delay:0.5s; }
+#heroCarousel.is-ready .carousel-item.active .hero-content .hero-sub   { opacity:1; transform:translateY(0); transition-delay:0.7s; }
+#heroCarousel.is-ready .carousel-item.active .hero-content .hero-btns { opacity:1; transform:translateY(0); transition-delay:0.9s; }
 
 .hero-title {
     font-family: 'Playfair Display', serif;
@@ -297,8 +312,18 @@
     background: var(--gold);
     width: 24px;
     border-radius: 4px;
+    animation: dotGlow 2s ease-in-out infinite;
+}
+@keyframes dotGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,.5); }
+    50% { box-shadow: 0 0 8px 2px rgba(245,166,35,.5); }
 }
 
+.btn-primary, .btn-outline {
+    position: relative;
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
 .btn-primary {
     background: var(--gold);
     color: var(--dark);
@@ -315,6 +340,21 @@
     font-weight: 600;
     display: inline-block;
 }
+.btn-primary:hover, .btn-outline:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(245,166,35,.35);
+}
+/* shine sweep on hover */
+.btn-primary::after, .btn-outline::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.5), transparent);
+    transform: skewX(-20deg);
+    transition: left .6s ease;
+}
+.btn-primary:hover::after, .btn-outline:hover::after { left: 130%; }
 
 /* ═══════════════════════════════════════
    STATS BAR
@@ -383,10 +423,19 @@
     padding: 2.5rem 1.8rem;
     background: var(--cream);
     border-radius: 16px;
-    transition: all .3s ease;
+    transition: transform .35s ease, box-shadow .35s ease;
 }
-.keunggulan-card:hover { transform: translateY(-10px); }
-.keunggulan-card .icon { font-size: 2rem; margin-bottom: .75rem; }
+.keunggulan-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 18px 35px rgba(10,22,40,.1);
+}
+.keunggulan-card .icon {
+    font-size: 2rem;
+    margin-bottom: .75rem;
+    display: inline-block;
+    transition: transform .35s ease;
+}
+.keunggulan-card:hover .icon { transform: scale(1.2) rotate(-6deg); }
 .keunggulan-card h3 { font-weight:600; color:var(--dark); margin-bottom:.5rem; font-size:1.2rem; }
 .keunggulan-card p  { color: #6a7d90; font-size: .9rem; line-height: 1.6; margin: 0; }
 
@@ -414,6 +463,11 @@
 }
 .pkg-card:hover { transform:translateY(-8px); box-shadow:0 16px 50px rgba(0,0,0,.12); }
 .pkg-card.featured { border:2px solid var(--gold); }
+.pkg-card.featured .pkg-badge { animation: badgePulse 2s ease-in-out infinite; }
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
 
 .pkg-badge {
     position: absolute;
@@ -435,12 +489,15 @@
     align-items: flex-end;
     padding: 1.5rem;
     background: linear-gradient(135deg, var(--dark), #0D2137);
+    overflow: hidden;
 }
 .pkg-header-dimmer {
     position: absolute;
     inset: 0;
     background: linear-gradient(to top, rgba(10,22,40,.9) 0%, rgba(10,22,40,.35) 100%);
 }
+.pkg-card:hover .pkg-header { background-size: 112% !important; }
+.pkg-header { transition: background-size .6s ease; background-size: 100%; }
 .pkg-header-content { position:relative; z-index:2; }
 .pkg-name {
     font-family: 'Playfair Display', serif;
@@ -480,8 +537,9 @@
     font-weight: 600;
     font-size: .85rem;
     text-decoration: none;
-    transition: background .3s;
+    transition: background .3s, transform .25s;
 }
+.pkg-btn-detail:hover, .pkg-btn-wa:hover { transform: translateY(-2px); }
 .pkg-btn-detail { background:var(--dark); color:#fff; }
 .pkg-btn-detail:hover { background:#1B8FD4; color:#fff; }
 .pkg-btn-wa { background:#25D366; color:#fff; }
@@ -498,7 +556,11 @@
     text-decoration: none;
     transition: all .3s;
 }
-.btn-lihat-semua:hover { background:var(--dark); color:#fff; }
+.btn-lihat-semua .arrow { display:inline-block; transition: transform .3s ease; margin-left:.25rem; }
+.btn-lihat-semua:hover { background:var(--dark); color:#fff; transform: translateY(-3px); }
+.btn-lihat-semua:hover .arrow { transform: translateX(5px); }
+.pkg-btn-detail .arrow { display:inline-block; transition: transform .3s ease; }
+.pkg-btn-detail:hover .arrow { transform: translateX(4px); }
 
 .info-pembayaran {
     margin-top: 2rem;
@@ -511,16 +573,28 @@
 }
 
 /* ═══════════════════════════════════════
-   REVEAL ANIMATION
+   REVEAL ANIMATION — ZOOM IN (dengan stagger delay)
 ═══════════════════════════════════════ */
 .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity .6s ease, transform .6s ease;
+    transform: scale(0.85) translateY(24px);
+    transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    transition-delay: calc(var(--delay, 0) * 0.12s);
+    will-change: opacity, transform;
 }
 .reveal.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
+}
+
+/* Zoom-in lebih kuat khusus untuk card (keunggulan & paket) */
+.reveal.zoom-in {
+    transform: scale(0.7) translateY(20px);
+    transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+    transition-delay: calc(var(--delay, 0) * 0.15s);
+}
+.reveal.zoom-in.visible {
+    transform: scale(1) translateY(0);
 }
 
 /* ═══════════════════════════════════════
@@ -678,13 +752,18 @@
 ═══════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
     .reveal,
+    .reveal.zoom-in,
     .keunggulan-card,
     .pkg-card,
-    .hero-content > * {
+    .hero-content > *,
+    .carousel-item,
+    .pkg-badge {
         transition: none !important;
         animation: none !important;
     }
-    .reveal { opacity: 1; transform: none; }
+    .reveal,
+    .reveal.zoom-in { opacity: 1; transform: none; }
+    .carousel-item { transform: none !important; }
 }
 </style>
 @endpush
@@ -694,30 +773,175 @@
 ════════════════════════════════════════ --}}
 @push('js')
 <script>
-// Reveal on scroll
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => entry.target.classList.add('visible'), i * 100);
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.05 });
-reveals.forEach(el => observer.observe(el));
+document.addEventListener('DOMContentLoaded', function () {
 
-// Swipe support untuk hero carousel di mobile
-(function () {
-    const carousel = document.getElementById('heroCarousel');
-    if (!carousel) return;
-    let startX = 0;
-    carousel.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, { passive: true });
-    carousel.addEventListener('touchend', e => {
-        const diff = startX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) < 50) return;
-        const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carousel);
-        diff > 0 ? bsCarousel.next() : bsCarousel.prev();
-    }, { passive: true });
-})();
+    // ── 1. REVEAL ON SCROLL (zoom-in, stagger via --delay) ──
+    var reveals = document.querySelectorAll('.reveal');
+    if (reveals.length) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) { revealObserver.observe(el); });
+
+        // Safety net: kalau ada elemen reveal yang udah kelihatan di viewport
+        // saat halaman pertama kali load (misal section paling atas), munculin langsung.
+        reveals.forEach(function (el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+                revealObserver.unobserve(el);
+            }
+        });
+    }
+
+    // ── 2. ANIMATED COUNTER — stats bar ──
+    function animateCount(el) {
+        var target = parseFloat(el.dataset.count);
+        var suffix = el.dataset.suffix || '';
+        var decimal = parseInt(el.dataset.decimal || '0', 10);
+        var duration = 1500;
+        var start = performance.now();
+        function tick(now) {
+            var progress = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = (target * eased).toFixed(decimal) + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+            else el.textContent = target.toFixed(decimal) + suffix;
+        }
+        requestAnimationFrame(tick);
+    }
+    var statNums = document.querySelectorAll('.stat-num');
+    if (statNums.length) {
+        var statObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    animateCount(entry.target);
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+        statNums.forEach(function (el) { statObserver.observe(el); });
+    }
+
+    // ── 3. ANIMATED COUNTER — harga paket ──
+    function animatePrice(el) {
+        var target = parseInt(el.dataset.price, 10) || 0;
+        var duration = 1200;
+        var start = performance.now();
+        function tick(now) {
+            var progress = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = Math.round(target * eased);
+            el.textContent = 'Rp ' + current.toLocaleString('id-ID');
+            if (progress < 1) requestAnimationFrame(tick);
+            else el.textContent = 'Rp ' + target.toLocaleString('id-ID');
+        }
+        requestAnimationFrame(tick);
+    }
+    var priceNums = document.querySelectorAll('.pkg-price-num[data-price]');
+    if (priceNums.length) {
+        var priceObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    animatePrice(entry.target);
+                    priceObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+        priceNums.forEach(function (el) { priceObserver.observe(el); });
+    }
+
+    // ── 4. HERO CAROUSEL — pakai Bootstrap kalau ada, fallback manual kalau nggak ──
+    var carouselEl = document.getElementById('heroCarousel');
+    if (carouselEl) {
+        var items = carouselEl.querySelectorAll('.carousel-item');
+        var indicators = carouselEl.querySelectorAll('.hero-indicators [data-bs-slide-to]');
+        var prevBtn = carouselEl.querySelector('.carousel-control-prev');
+        var nextBtn = carouselEl.querySelector('.carousel-control-next');
+        var current = 0;
+        var intervalMs = parseInt(carouselEl.dataset.bsInterval, 10) || 5000;
+        var timer = null;
+
+        function goTo(index) {
+            index = (index + items.length) % items.length;
+            items.forEach(function (it, i) { it.classList.toggle('active', i === index); });
+            indicators.forEach(function (dot, i) { dot.classList.toggle('active', i === index); });
+            current = index;
+        }
+        function nextSlide() { goTo(current + 1); }
+        function prevSlide() { goTo(current - 1); }
+        function startAutoplay() {
+            stopAutoplay();
+            timer = setInterval(nextSlide, intervalMs);
+        }
+        function stopAutoplay() {
+            if (timer) clearInterval(timer);
+        }
+
+        // Cek apakah Bootstrap JS (carousel component) ke-load.
+        var hasBootstrapJS = (typeof window.bootstrap !== 'undefined' && window.bootstrap.Carousel);
+
+        if (!hasBootstrapJS) {
+            // ── Fallback manual: Bootstrap JS nggak ada, kita yang gerakin sendiri ──
+            goTo(0);
+            startAutoplay();
+
+            if (prevBtn) prevBtn.addEventListener('click', function (e) {
+                e.preventDefault(); prevSlide(); startAutoplay();
+            });
+            if (nextBtn) nextBtn.addEventListener('click', function (e) {
+                e.preventDefault(); nextSlide(); startAutoplay();
+            });
+            indicators.forEach(function (dot, i) {
+                dot.addEventListener('click', function (e) {
+                    e.preventDefault(); goTo(i); startAutoplay();
+                });
+            });
+
+            // Swipe support (mobile) — versi fallback
+            (function () {
+                var startX = 0;
+                carouselEl.addEventListener('touchstart', function (e) {
+                    startX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                carouselEl.addEventListener('touchend', function (e) {
+                    var diff = startX - e.changedTouches[0].screenX;
+                    if (Math.abs(diff) < 50) return;
+                    diff > 0 ? nextSlide() : prevSlide();
+                    startAutoplay();
+                }, { passive: true });
+            })();
+        } else {
+            // ── Bootstrap JS tersedia — biarkan Bootstrap yang handle slide & tombol ──
+            // Kita cuma tambahin swipe support buat mobile.
+            var bsCarousel = window.bootstrap.Carousel.getOrCreateInstance(carouselEl);
+            var startX = 0;
+            carouselEl.addEventListener('touchstart', function (e) {
+                startX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            carouselEl.addEventListener('touchend', function (e) {
+                var diff = startX - e.changedTouches[0].screenX;
+                if (Math.abs(diff) < 50) return;
+                diff > 0 ? bsCarousel.next() : bsCarousel.prev();
+            }, { passive: true });
+        }
+
+        // ── 5. TRIGGER ANIMASI TEKS HERO PERTAMA KALI WEB DIBUKA ──
+        // Item pertama sudah ber-class "active" dari server (Blade), jadi tanpa trik ini
+        // browser langsung render teksnya full opacity tanpa animasi. Dengan menunda
+        // penambahan class "is-ready" satu frame, transisi CSS jadi benar-benar "play".
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                carouselEl.classList.add('is-ready');
+            });
+        });
+    }
+
+});
 </script>
 @endpush
