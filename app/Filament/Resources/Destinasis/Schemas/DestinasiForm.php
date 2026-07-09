@@ -30,7 +30,10 @@ class DestinasiForm
                     ->columnSpanFull(),
 
                 FileUpload::make('gambar')
-                    ->image(),
+                    ->image()
+                    ->disk('public')
+                    ->directory('paket')
+                    ->required(),
 
                 Select::make('paketTrips')
                     ->relationship(
