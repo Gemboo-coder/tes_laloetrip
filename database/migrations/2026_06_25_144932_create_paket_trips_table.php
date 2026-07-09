@@ -21,7 +21,7 @@ return new class extends Migration
     $table->string('durasi');
     $table->string('slug')->unique();
     $table->string('thumbnail')->nullable();
-    $table->string('jumlah_destinasi')->nullable();
+    
     $table->timestamps();
 });
     }

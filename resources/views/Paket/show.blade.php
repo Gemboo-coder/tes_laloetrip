@@ -45,7 +45,7 @@
                 <h2 class="detail-section-title">Destinasi dalam Paket</h2>
                 <div class="destinasi-grid">
                     @foreach($paketTrip->destinasis as $destinasi)
-                    <div class="destinasi-card">
+                    <a href="{{ route('destinasi.show', $destinasi->slug) }}" class="destinasi-card" style="text-decoration:none;">
                         <div class="destinasi-img-wrap">
                             @if($destinasi->gambar)
                                 <img src="{{ asset('storage/' . $destinasi->gambar) }}"
@@ -60,7 +60,7 @@
                             <h4 class="destinasi-nama">{{ $destinasi->nama_destinasi }}</h4>
                             <p class="destinasi-desc">{{ Str::limit($destinasi->deskripsi, 80) }}</p>
                         </div>
-                    </div>
+                    </a>
                     @endforeach
                 </div>
             </div>
@@ -219,6 +219,8 @@
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 1rem;
+    padding-bottom: .7rem;
+    border-bottom: 2px solid var(--gold);
 }
 .detail-desc {
     font-size: .92rem;
@@ -230,7 +232,7 @@
 /* ── DESTINASI GRID ── */
 .destinasi-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.2rem;
 }
 .destinasi-card {

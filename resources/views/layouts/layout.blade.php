@@ -6,7 +6,7 @@
 
     <title>@yield('title', 'LaloeTrip — Explore Lombok')</title>
 
-    <link rel="icon" href="{{ asset('assets/gambar/logo.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('assets/logo.png') }}" type="image/png">
 
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,7 @@
         }
 
         /* ════════════════════════════════════
-           NAVBAR
+        NAVBAR
         ════════════════════════════════════ */
         .navbar-custom {
             position: fixed;
@@ -232,7 +232,7 @@
         }
 
         /* ════════════════════════════════════
-           FOOTER
+        FOOTER
         ════════════════════════════════════ */
         .custom-footer {
             background: var(--dark);
@@ -352,6 +352,36 @@
                 gap: .3rem;
             }
         }
+
+        /* ════════════════════════════════════
+        GLOBAL REVEAL ANIMATION (dipakai semua page)
+        ════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: scale(0.85) translateY(24px);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+            transition-delay: calc(var(--delay, 0) * 0.12s);
+            will-change: opacity, transform;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        .reveal.zoom-in {
+            transform: scale(0.7) translateY(20px);
+            transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+            transition-delay: calc(var(--delay, 0) * 0.15s);
+        }
+        .reveal.zoom-in.visible {
+            transform: scale(1) translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal.zoom-in {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
     </style>
 </head>
 
@@ -370,7 +400,7 @@
             <li><a class="nav-link" href="{{ route('home') }}">Beranda</a></li>
             <li><a class="nav-link" href="{{ route('paket.paket') }}">Paket Trip</a></li>
             <li><a class="nav-link" href="{{ route('destinasi.index') }}">Destinasi Wisata</a></li>
-            <li><a class="nav-link" href="#">Tentang Kami</a></li>
+            <li><a class="nav-link" href="{{ route('about') }}">Tentang Kami</a></li>
             <li><a class="nav-link" href="#">Galeri</a></li>
             <li>
                 <a href="https://wa.me/6285713717336" target="_blank" class="btn-booking">
@@ -408,7 +438,7 @@
     <a class="m-link" href="{{ route('home') }}">Beranda</a>
     <a class="m-link" href="{{ route('paket.paket') }}">Paket Trip</a>
     <a class="m-link" href="{{ route('destinasi.index') }}">Destinasi Wisata</a>
-    <a class="m-link" href="#">Tentang Kami</a>
+    <a class="m-link" href="{{ route('about') }}">Tentang Kami</a>
     <a class="m-link" href="#">Galeri</a>
 
     <a href="https://wa.me/6285713717336" target="_blank" class="btn-booking">
@@ -509,6 +539,30 @@ document.addEventListener('DOMContentLoaded', function () {
         // Tutup saat link diklik
         menu.querySelectorAll('a.m-link').forEach(function(a) {
             a.addEventListener('click', closeMenu);
+        });
+    }
+
+    // ── REVEAL ON SCROLL — global, dipakai semua page ──
+    var reveals = document.querySelectorAll('.reveal');
+    if (reveals.length) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) { revealObserver.observe(el); });
+
+        // Safety net: elemen reveal yang udah kelihatan di viewport
+        // saat halaman pertama kali load, munculin langsung.
+        reveals.forEach(function (el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+                revealObserver.unobserve(el);
+            }
         });
     }
 

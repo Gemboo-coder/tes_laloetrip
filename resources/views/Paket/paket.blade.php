@@ -9,9 +9,14 @@
     <div class="paket-hero-bg" style="background-image: url('{{ asset('assets/gili.jpg') }}');"></div>
     <div class="paket-hero-dimmer"></div>
     <div class="paket-hero-content">
-        <span class="hero-badge">✦ Paket Wisata</span>
-        <h1 class="hero-title mt-3">Pilih Perjalanan<br><em>Impian Anda</em></h1>
-        <p class="hero-sub">Dari fullday trip santai hingga petualangan multi-hari yang mendebarkan — semua tersedia dengan harga yang terjangkau dan pengalaman yang tak terlupakan.</p>
+        <div class="paket-breadcrumb reveal">
+            <a href="{{ route('home') }}">Home</a>
+            <span class="sep">/</span>
+            <span>Paket Wisata</span>
+        </div>
+        <span class="hero-badge mb-2 reveal">✦ Paket Wisata</span>
+        <h1 class="paket-hero-title reveal">Pilih Perjalanan<br><em>Impian Anda</em></h1>
+        <p class="paket-hero-sub reveal">Dari fullday trip santai hingga petualangan multi-hari yang mendebarkan — semua tersedia dengan harga yang terjangkau dan pengalaman yang tak terlupakan.</p>
     </div>
     <div class="paket-hero-wave">
         <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,15 +64,15 @@
                 @php $isFeatured = $loop->first; @endphp
 
                 <article class="paket-card {{ $isFeatured ? 'paket-card--featured' : '' }}"
-                         data-category="{{ Str::slug($paket->jenis_paket) }}"
-                         data-harga="{{ $paket->harga }}">
+                        data-category="{{ Str::slug($paket->jenis_paket) }}"
+                        data-harga="{{ $paket->harga }}">
 
                     {{-- IMAGE --}}
                     <div class="paket-card-img-wrap">
                         @if($paket->thumbnail)
                             <img src="{{ asset('storage/' . $paket->thumbnail) }}"
-                                 alt="{{ $paket->nama_paket }}"
-                                 class="paket-card-img">
+                                alt="{{ $paket->nama_paket }}"
+                                class="paket-card-img">
                         @else
                             <div class="paket-card-img--placeholder">
                                 <span>🏖️</span>
@@ -104,7 +109,7 @@
                                 <span class="paket-price-unit">/pax</span>
                             </div>
                             <a href="{{ route('paket.show', $paket->slug) }}"
-                               class="paket-book-btn {{ $isFeatured ? 'paket-book-btn--gold' : '' }}">
+                            class="paket-book-btn {{ $isFeatured ? 'paket-book-btn--gold' : '' }}">
                                 Lihat Detail
                             </a>
                         </div>
@@ -176,6 +181,7 @@
     position: relative;
     z-index: 10;
     padding: 0 20px;
+    max-width: 700px;
 }
 .paket-hero-wave {
     position: absolute;
@@ -183,6 +189,23 @@
     width: 100%;
     z-index: 15;
 }
+
+/* ── HERO TEKS (tema sama seperti About Us) ── */
+.paket-breadcrumb {
+    font-size: .8rem; color: rgba(255,255,255,.55);
+    margin-bottom: 1.5rem; letter-spacing: .03em;
+}
+.paket-breadcrumb a { color: rgba(255,255,255,.75); text-decoration: none; }
+.paket-breadcrumb a:hover { color: var(--gold); }
+.paket-breadcrumb .sep { margin: 0 .5rem; color: rgba(255,255,255,.35); }
+.paket-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700; color: #fff; line-height: 1.15;
+    margin: 1rem 0 1.2rem;
+}
+.paket-hero-title em { font-style: normal; color: var(--gold); }
+.paket-hero-sub { color: rgba(255,255,255,.75); font-size: 1.05rem; line-height: 1.7; }
 
 /* ── FILTER BAR ── */
 .filter-bar {
@@ -486,6 +509,18 @@
     color: #fff;
 }
 
+/* ── REVEAL (tema sama seperti About Us) ── */
+.reveal {
+    opacity: 0; transform: scale(0.85) translateY(24px);
+    transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    transition-delay: calc(var(--delay, 0) * 0.12s);
+    will-change: opacity, transform;
+}
+.reveal.visible { opacity: 1; transform: scale(1) translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { transition:none !important; animation:none !important; opacity:1; transform:none; }
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .paket-grid { grid-template-columns: repeat(2, 1fr); }
@@ -500,6 +535,30 @@
 
 @push('js')
 <script>
+// Reveal on scroll (hero teks — tema sama seperti About Us)
+document.addEventListener('DOMContentLoaded', function () {
+    var reveals = document.querySelectorAll('.reveal');
+    if (reveals.length) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+                revealObserver.unobserve(el);
+            } else {
+                revealObserver.observe(el);
+            }
+        });
+    }
+});
+
 // Filter tabs
 const tabs = document.querySelectorAll('.filter-tab');
 const grid = document.getElementById('paketGrid');
