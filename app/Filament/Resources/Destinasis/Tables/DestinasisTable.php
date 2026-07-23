@@ -14,16 +14,11 @@ class DestinasisTable
     {
         return $table
             ->columns([
-
                 ImageColumn::make('gambar'),
-
                 TextColumn::make('nama_destinasi')
                     ->searchable(),
-
                 TextColumn::make('kategori'),
-
                 TextColumn::make('slug'),
-
             ])
             ->recordActions([
                 EditAction::make(),
