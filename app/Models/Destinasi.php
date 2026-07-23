@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Destinasi_Galeris;
 
 class Destinasi extends Model
 {
@@ -20,5 +21,10 @@ class Destinasi extends Model
             PaketTrip::class,
             'destinasi_paket_trip'
         );
+    }
+
+    public function galeri()
+    {
+        return $this->belongsToMany(Destinasi_Galeris::class, 'destinasi__galeris');
     }
 }
