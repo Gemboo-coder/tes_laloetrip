@@ -15,9 +15,7 @@ class DestinasiGalerisTable
     {
         return $table
             ->columns([
-
                 ImageColumn::make('gambar'),
-
                 TextColumn::make('destinasi.nama_destinasi')
                     ->searchable(),
             ])
