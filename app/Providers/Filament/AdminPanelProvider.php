@@ -29,6 +29,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
 
+            ->brandName('LaloeTrip')
+
+
             ->colors([
                 'primary' => Color::Amber,
             ])
