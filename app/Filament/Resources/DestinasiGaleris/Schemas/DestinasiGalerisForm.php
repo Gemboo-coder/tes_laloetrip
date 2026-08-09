@@ -22,7 +22,10 @@ class DestinasiGalerisForm
                     ->required(),
                 FileUpload::make('gambar')
                     ->image()
+                    ->disk('public')
                     ->directory('destinasi_galeri')
+                    ->multiple()
+                    ->reorderable()
                     ->required(),
             ]);
     }

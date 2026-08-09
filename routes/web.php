@@ -23,8 +23,7 @@ Route::get('/destinasi', [DestinasiController::class, 'index'])
 Route::get('/destinasi/{slug}', [DestinasiController::class, 'show'])
     ->name('destinasi.show');
 
-Route::get('/galeri', [GaleriController::class, 'index'])
-    ->name('galeri.index');
+    Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 
 Route::get('/review', [ReviewController::class, 'index'])
     ->name('review.index');
@@ -52,6 +51,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
 });
 
 require __DIR__.'/auth.php';

@@ -71,7 +71,13 @@
         .navbar-brand {
             margin: 0; padding: 0; line-height: 1; flex-shrink: 0;
         }
-        .navbar-brand img { height: 32px; width: auto; display: block; }
+        .navbar-brand img {
+            height: 48px;
+            width: auto;
+            display: block;
+            transition: height .4s;
+        }
+        .navbar-custom.scrolled .navbar-brand img { height: 40px; }
 
         /* Desktop nav */
         .navbar-menu {
@@ -401,7 +407,7 @@
             <li><a class="nav-link" href="{{ route('paket.paket') }}">Paket Trip</a></li>
             <li><a class="nav-link" href="{{ route('destinasi.index') }}">Destinasi Wisata</a></li>
             <li><a class="nav-link" href="{{ route('about') }}">Tentang Kami</a></li>
-            <li><a class="nav-link" href="#">Galeri</a></li>
+            <li><a class="nav-link" href="{{ route('galeri.index') }}">Galeri</a></li>
             <li>
                 <a href="https://wa.me/6285713717336" target="_blank" class="btn-booking">
                     Booking Sekarang
@@ -439,7 +445,7 @@
     <a class="m-link" href="{{ route('paket.paket') }}">Paket Trip</a>
     <a class="m-link" href="{{ route('destinasi.index') }}">Destinasi Wisata</a>
     <a class="m-link" href="{{ route('about') }}">Tentang Kami</a>
-    <a class="m-link" href="#">Galeri</a>
+    <a class="m-link" href="{{ route('galeri.index') }}">Galeri</a>
 
     <a href="https://wa.me/6285713717336" target="_blank" class="btn-booking">
         Booking Sekarang

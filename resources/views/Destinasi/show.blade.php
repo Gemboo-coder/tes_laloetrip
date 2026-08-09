@@ -30,6 +30,44 @@
                 <div class="dest-detail-desc">{!! nl2br(e($destinasi->deskripsi)) !!}</div>
             </div>
 
+            {{-- GALERI FOTO --}}
+            @if($destinasi->galeri->isNotEmpty())
+            <div class="dest-detail-card">
+                <h2 class="dest-detail-title">Galeri Foto</h2>
+
+                <div class="dest-galeri-slider-wrap">
+                    @if($destinasi->galeri->count() > 3)
+                    <button type="button" class="dest-galeri-arrow dest-galeri-arrow-left" onclick="destGaleriScroll(this, -1)" aria-label="Sebelumnya">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    @endif
+
+                    <div class="dest-galeri-track">
+                        @foreach($destinasi->galeri as $foto)
+                        <div class="dest-galeri-item" data-bs-toggle="modal" data-bs-target="#galeriModal{{ $foto->id }}">
+                            <img src="{{ asset('storage/' . $foto->gambar) }}" alt="{{ $destinasi->nama_destinasi }}" class="dest-galeri-img">
+                        </div>
+
+                        <div class="modal fade" id="galeriModal{{ $foto->id }}" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content" style="background:transparent; border:none;">
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="position:absolute; top:-2.2rem; right:0;"></button>
+                                    <img src="{{ asset('storage/' . $foto->gambar) }}" class="img-fluid rounded" alt="{{ $destinasi->nama_destinasi }}">
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    @if($destinasi->galeri->count() > 3)
+                    <button type="button" class="dest-galeri-arrow dest-galeri-arrow-right" onclick="destGaleriScroll(this, 1)" aria-label="Selanjutnya">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                    @endif
+                </div>
+            </div>
+            @endif
+
             {{-- PAKET TERKAIT --}}
             @if($destinasi->paketTrips->isNotEmpty())
             <div class="dest-detail-card">
@@ -180,6 +218,69 @@
     margin: 0;
 }
 
+/* ── GALERI FOTO (slider) ── */
+.dest-galeri-slider-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.dest-galeri-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding-bottom: .2rem;
+    flex: 1;
+    scrollbar-width: none;
+}
+.dest-galeri-track::-webkit-scrollbar {
+    display: none;
+}
+.dest-galeri-item {
+    flex: 0 0 auto;
+    width: calc((100% - 2rem) / 3);
+    aspect-ratio: 16/10;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    scroll-snap-align: start;
+}
+.dest-galeri-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .3s;
+}
+.dest-galeri-item:hover .dest-galeri-img {
+    transform: scale(1.08);
+}
+.dest-galeri-arrow {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.1);
+    background: #fff;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .25s;
+    box-shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+.dest-galeri-arrow:hover {
+    background: var(--dark);
+    color: #fff;
+    border-color: var(--dark);
+}
+@media (max-width: 640px) {
+    .dest-galeri-item { width: calc((100% - 1rem) / 2); }
+    .dest-galeri-arrow { width: 30px; height: 30px; }
+}
+
 /* ── PAKET TERKAIT ── */
 .paket-terkait-grid {
     display: grid;
@@ -271,4 +372,14 @@
     .dest-title-main { font-size:1.5rem; }
 }
 </style>
+@endpush
+
+@push('js')
+<script>
+function destGaleriScroll(btn, dir) {
+    const track = btn.closest('.dest-galeri-slider-wrap').querySelector('.dest-galeri-track');
+    const itemWidth = track.querySelector('.dest-galeri-item')?.offsetWidth || 200;
+    track.scrollBy({ left: dir * (itemWidth + 10), behavior: 'smooth' });
+}
+</script>
 @endpush

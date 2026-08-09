@@ -25,6 +25,6 @@ class Destinasi extends Model
 
     public function galeri()
     {
-        return $this->belongsToMany(Destinasi_Galeris::class, 'destinasi__galeris');
+        return $this->hasMany(Destinasi_Galeris::class, 'destinasi_id');
     }
 }
