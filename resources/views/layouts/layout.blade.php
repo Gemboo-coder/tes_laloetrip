@@ -72,12 +72,12 @@
             margin: 0; padding: 0; line-height: 1; flex-shrink: 0;
         }
         .navbar-brand img {
-            height: 48px;
+            height: 40px;
             width: auto;
             display: block;
             transition: height .4s;
         }
-        .navbar-custom.scrolled .navbar-brand img { height: 40px; }
+        .navbar-custom.scrolled .navbar-brand img { height: 48px; }
 
         /* Desktop nav */
         .navbar-menu {
@@ -255,7 +255,7 @@
         }
 
         .footer-brand .logo-footer {
-            height: 40px; width: auto;
+            height: 60px; width: auto;
             margin-bottom: 1.2rem;
             display: block;
         }

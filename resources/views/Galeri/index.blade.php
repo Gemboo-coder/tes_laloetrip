@@ -6,7 +6,7 @@
 
 {{-- HERO --}}
 <section class="galeri-hero">
-    <div class="galeri-hero-bg"></div>
+    <div class="galeri-hero-bg" style="background-image: url('{{ asset('assets/gili.jpg') }}');"></div>
     <div class="galeri-hero-dimmer"></div>
     <div class="galeri-hero-content">
         <span class="hero-badge" style="border-color:var(--gold); color:var(--gold);">✦ Dokumentasi</span>
@@ -77,23 +77,26 @@
 /* ── HERO ── */
 .galeri-hero {
     position: relative;
-    height: 32vh;
-    min-height: 240px;
-    overflow: hidden;
+    height: 60vh;
+    min-height: 420px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    overflow: hidden;
 }
 .galeri-hero-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, var(--dark), #0D2137);
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+
 }
 .galeri-hero-dimmer {
     position: absolute;
     inset: 0;
-    background: rgba(10,22,40,.15);
+    background: linear-gradient(to bottom, rgba(10,22,40,.75), rgba(10,22,40,.5));
     z-index: 1;
 }
 .galeri-hero-content {

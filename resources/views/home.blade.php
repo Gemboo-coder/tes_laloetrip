@@ -11,7 +11,7 @@
     <div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-inner h-100">
 
-            <div class="carousel-item active h-100" style="background-image: url('{{ asset('assets/gili.jpg') }}');">
+            <div class="carousel-item active h-100" style="background-image: url('{{ asset('assets/gili.jpg') }}');"    >
                 <div class="hero-dimmer"></div>
                 <div class="hero-center-wrapper">
                     <div class="hero-content">
@@ -67,7 +67,7 @@
 ════════════════════════════════════════ --}}
 <div class="stats-bar">
     <div class="stats-grid">
-        <div><div class="stat-num" data-count="50" data-suffix="+">0</div><div class="stat-label">DESTINASI</div></div>
+    <div><div class="stat-num" data-count="{{ $destinasis->count() }}" data-suffix="+">0</div><div class="stat-label">DESTINASI</div></div>
         <div><div class="stat-num" data-count="500" data-suffix="+">0</div><div class="stat-label">TRAVELER PUAS</div></div>
         <div><div class="stat-num" data-count="3" data-suffix="">0</div><div class="stat-label">PAKET PILIHAN</div></div>
         <div><div class="stat-num" data-count="4.9" data-suffix="★" data-decimal="1">0</div><div class="stat-label">RATA-RATA RATING</div></div>
@@ -582,8 +582,8 @@
 .pkg-btn-detail:hover, .pkg-btn-wa:hover { transform:translateY(-2px); }
 .pkg-btn-detail { background:var(--dark); color:#fff; }
 .pkg-btn-detail:hover { background:#1B8FD4; color:#fff; }
-.pkg-btn-wa { background:#25D366; color:#fff; }
-.pkg-btn-wa:hover { background:#1aaa53; color:#fff; }
+.pkg-btn-wa { background:var(--gold); color:var(--dark); }
+.pkg-btn-wa:hover { background:#d4890e; color:var(--dark); }    
 .btn-lihat-semua {
     display: inline-block; border:2px solid var(--dark); color:var(--dark);
     padding:.8rem 2.5rem; border-radius:50px; font-weight:600; font-size:.9rem;
@@ -875,6 +875,7 @@
     z-index: 1;
     max-width: 700px;
     margin: 0 auto 4rem;
+    text-align: center;
 }
 .cara-grid {
     display: grid;
@@ -988,12 +989,19 @@
     line-height: 1.6;
 }
 .kontak-map-wrap {
+    position: relative;
     width: 100%;
-    height: 100%;
-    min-height: 420px;
+    height: 420px;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 12px 40px rgba(10,22,40,.12);
+}
+.kontak-map-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
 
 /* ═══ RESPONSIVE ═══ */

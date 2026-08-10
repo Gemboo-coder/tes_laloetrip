@@ -180,7 +180,6 @@
     text-align: center;
     padding: 8rem 5% 6rem;
     background:
-        linear-gradient(135deg, rgba(10,22,40,.92) 0%, rgba(13,33,55,.92) 60%, rgba(20,40,64,.92) 100%),
         url('{{ asset('assets/gili.jpg') }}');
     background-size: cover;
     background-position: center;
@@ -198,6 +197,13 @@
     font-size: .8rem; color: rgba(255,255,255,.55);
     margin-bottom: 1.5rem; letter-spacing: .03em;
 }
+.about-hero-dimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10,22,40,.75), rgba(10,22,40,.5));
+    z-index: 1;
+}
+
 .about-breadcrumb a { color: rgba(255,255,255,.75); text-decoration: none; }
 .about-breadcrumb a:hover { color: var(--gold); }
 .about-breadcrumb .sep { margin: 0 .5rem; color: rgba(255,255,255,.35); }
